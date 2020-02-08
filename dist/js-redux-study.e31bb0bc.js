@@ -867,7 +867,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var divToggle = document.getElementsByClassName('toggle')[0];
 var counter = document.querySelector('h1');
 var btnIncrease = document.querySelector('#increase');
-var btnDecrease = document.querySelector('#decrease'); // 액션 타입과 약션 생성 함수 정의 
+var btnDecrease = document.querySelector('#decrease'); // 액션 타입과 액션 생성 함수 정의 
 
 var TOGGLE_SWITCH = 'TOGGLE_SWITCH';
 var INCREASE = 'INCREASE';
@@ -899,6 +899,7 @@ var initialState = {
   counter: 0
 }; // state가 undefined일 때는 initialState를 기본값으로 사용
 // reducer 함수가 맨 처음 호출될 때는 state 값이 undefined이다.
+// initialState를 기본값으로 설정하기 위해 함수의 파라미터 쪽에 기본값이 설정해두었다.
 
 function reducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
@@ -927,7 +928,9 @@ function reducer() {
   }
 }
 
-var store = (0, _redux.createStore)(reducer);
+var store = (0, _redux.createStore)(reducer); //이 함수를 사용하기 위해서는 상단에 import를 해주어야 한다.
+//그리고 이 함수안에 파라미터로 리듀서를 넣어주어야 한다.
+//다시 그려주는 부분
 
 var render = function render() {
   var state = store.getState(); //현재 상태를 불러온다.
@@ -935,16 +938,19 @@ var render = function render() {
 
   if (state.toggle) {
     divToggle.classList.add('active');
+    divToggle.innerText = "One more";
   } else {
     divToggle.classList.remove('active');
+    divToggle.innerText = "Click me";
   } //카운터 처리
 
 
   counter.innerText = state.counter;
-};
+}; //react-redux 사용시에는 라이브러리에서 대신 사용해주기에 생략해준다.
+
 
 render();
-store.subscribe(render);
+store.subscribe(render); //액션 발생시키기
 
 divToggle.onclick = function () {
   store.dispatch(toggleSwitch());
@@ -957,8 +963,6 @@ btnIncrease.onclick = function () {
 btnDecrease.onclick = function () {
   store.dispatch(decrease());
 };
-
-console.log(btnDecrease);
 },{"redux":"node_modules/redux/es/redux.js"}],"../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -987,7 +991,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63260" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63681" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

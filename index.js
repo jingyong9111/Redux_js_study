@@ -5,7 +5,7 @@ const counter = document.querySelector('h1');
 const btnIncrease = document.querySelector('#increase');
 const btnDecrease = document.querySelector('#decrease');
 
-// 액션 타입과 약션 생성 함수 정의 
+// 액션 타입과 액션 생성 함수 정의 
 const TOGGLE_SWITCH = 'TOGGLE_SWITCH';
 const INCREASE = 'INCREASE';
 const DECREASE = 'DECREASE';
@@ -24,8 +24,9 @@ const initialState = {
 
 // state가 undefined일 때는 initialState를 기본값으로 사용
 // reducer 함수가 맨 처음 호출될 때는 state 값이 undefined이다.
-function reducer(state = initialState, action){
-  //action.type에 따라 다른 작업을 처리함
+// initialState를 기본값으로 설정하기 위해 함수의 파라미터 쪽에 기본값이 설정해두었다.
+function reducer(state = initialState, action){   
+    //action.type에 따라 다른 작업을 처리함
   switch (action.type){
       case TOGGLE_SWITCH:
           return{
@@ -48,23 +49,31 @@ function reducer(state = initialState, action){
 }
 
 const store = createStore(reducer);
+//이 함수를 사용하기 위해서는 상단에 import를 해주어야 한다.
+//그리고 이 함수안에 파라미터로 리듀서를 넣어주어야 한다.
 
+
+//다시 그려주는 부분
 const render = () =>{
     const state = store.getState(); //현재 상태를 불러온다.
     //토글 처리
     if(state.toggle){
         divToggle.classList.add('active');
+        divToggle.innerText="One more"
     }else{
         divToggle.classList.remove('active');
+        divToggle.innerText="Click me"
     }
     //카운터 처리
     counter.innerText = state.counter;
 }
 
+//react-redux 사용시에는 라이브러리에서 대신 사용해주기에 생략해준다.
 render();
-
 store.subscribe(render);
 
+
+//액션 발생시키기
 divToggle.onclick = () =>{
    store.dispatch(toggleSwitch());
 };
@@ -75,6 +84,5 @@ btnDecrease.onclick=()=>{
     store.dispatch(decrease());
 }
 
-console.log(btnDecrease)
 
 
